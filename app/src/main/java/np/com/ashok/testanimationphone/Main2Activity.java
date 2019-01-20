@@ -15,7 +15,6 @@ public class Main2Activity extends AppCompatActivity {
 
     Button btndial;
     EditText etphoneno;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,5 +58,13 @@ public class Main2Activity extends AppCompatActivity {
     {
         super.finish();
         overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
+
+//To Clear on Pressing Back Button
+        Intent intentclear = new Intent(getApplicationContext(),MainActivity.class);
+        startActivity(intentclear);
+        getSharedPreferences("etusername",0).edit().clear();
+        getSharedPreferences("etpassword",0).edit().clear().commit();
+
+
     }
 }
