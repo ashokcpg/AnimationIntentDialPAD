@@ -4,6 +4,7 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,11 +32,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 //                Toast.makeText(MainActivity.this, ""+etusername.getText()+"\n"+etpassword.getText(), Toast.LENGTH_SHORT).show();
                 validate();
-                finish();
+                finish();   //Need this to Prevent it from loading on pressing back key
 
             }
         });
     }
+
+        //The Validation Process
 
         public void validate()
         {
@@ -57,16 +60,29 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Wrong Information...", Toast.LENGTH_LONG).show();
             }
         }
+
+        //On Back Button Press
         @Override
         public void onBackPressed() {
 
-        if (backPressedTime + 2000 > System.currentTimeMillis()) {
+        if (backPressedTime + 2000 > System.currentTimeMillis()) {  //Checks if the Back Button is pressed within 2 seconds or not...
             backToast.cancel();
             super.onBackPressed();
             return;
         } else {
-            backToast = Toast.makeText(getBaseContext(), "Press back again to Exit", Toast.LENGTH_SHORT);
+
+            // Get the custom layout view.
+            View toastView = getLayoutInflater().inflate(R.layout.activity_toast_custom_view, null);
+
+            // Initiate the Toast instance.
+            backToast = new Toast(getApplicationContext());
+            // Set custom view in toast.
+            backToast.setView(toastView);
+            backToast.setDuration(Toast.LENGTH_SHORT);
+            backToast.setGravity(Gravity.CENTER, 0,0);
             backToast.show();
+//            backToast = Toast.makeText(getBaseContext(), "Press back again to Exit", Toast.LENGTH_SHORT);
+//            backToast.show();
         }
         backPressedTime = System.currentTimeMillis();
     }
